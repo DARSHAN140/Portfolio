@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "unifiedjs.vscode-mdx",
+    "editorconfig.editorconfig"
+  ]
+}

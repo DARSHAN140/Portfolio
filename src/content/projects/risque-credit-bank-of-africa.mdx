@@ -1,0 +1,42 @@
+export const meta = {
+  title: "Prédiction du risque de crédit",
+  year: "2026",
+  order: 1,
+  featured: true,
+  summary:
+    "Modèle de scoring XGBoost explicable (SHAP), servi par une API FastAPI et un dashboard Streamlit, conteneurisé avec Docker.",
+  cover: "waterfall",
+  role: "Data Scientist",
+  tags: ["Python", "XGBoost", "SHAP", "FastAPI", "Streamlit", "Docker"],
+  // TODO : ajoute tes vrais chiffres, ex. { label: "AUC test", value: "0,87" }
+  metrics: [],
+  links: [],
+  demo: { type: "builtin", id: "credit-scoring" },
+}
+
+## Contexte
+
+Projet réalisé chez **Bank of Africa** : aider les analystes crédit à estimer le risque de défaut d'un client, et surtout à **comprendre ce qui motive chaque prédiction** pour pouvoir la justifier.
+
+## Données
+
+Données clients et historiques de crédit anonymisées.
+
+{/* TODO : volume (nb de lignes), nb de variables, taux de défaut — sans info confidentielle */}
+
+## Démarche
+
+1. **Préparation** : nettoyage, valeurs manquantes, encodage, feature engineering (ratios d'endettement, ancienneté…).
+2. **Modélisation** : comparaison de plusieurs modèles, puis optimisation d'XGBoost avec `GridSearchCV` et validation croisée.
+3. **Explicabilité** : SHAP pour l'importance globale des variables et l'explication locale de chaque client.
+4. **Mise en production** : API **FastAPI** pour le scoring, dashboard **Streamlit** pour les analystes, le tout dans **Docker**.
+
+## Résultats
+
+- Un outil de scoring utilisable par des non-techniciens grâce au dashboard et aux explications SHAP.
+
+{/* TODO : métrique principale (AUC, rappel sur la classe "défaut"), gain par rapport à l'existant */}
+
+## Ce que montre la démo
+
+La démo ci-dessous est un **modèle pédagogique simplifié** (régression logistique aux coefficients illustratifs, données fictives). Elle reproduit la logique de l'outil : un score de risque **et** l'explication de chaque facteur. Les données et le modèle de la banque restent confidentiels.

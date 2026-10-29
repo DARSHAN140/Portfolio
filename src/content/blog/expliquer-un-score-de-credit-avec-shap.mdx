@@ -1,0 +1,62 @@
+export const meta = {
+  title: "Expliquer un score de crédit avec SHAP",
+  date: "2026-10-28",
+  summary: "Pourquoi un bon modèle ne suffit pas en banque, et comment SHAP aide à justifier chaque prédiction.",
+  tags: ["Machine Learning", "Explicabilité"],
+}
+
+En banque, un modèle de scoring crédit ne se juge pas seulement à son AUC. Un analyste doit pouvoir répondre à une question simple : **pourquoi ce client a-t-il obtenu ce score ?** C'est ce que j'ai dû traiter pendant mon projet de prédiction du risque de crédit.
+
+## Le problème des modèles « boîte noire »
+
+Un modèle comme XGBoost combine des centaines d'arbres de décision. Il est souvent plus performant qu'une régression logistique, mais sa logique interne n'est pas lisible directement. Or, dans le crédit :
+
+- l'analyste doit pouvoir **justifier une décision** auprès du client et de sa hiérarchie ;
+- l'équipe risque doit vérifier que le modèle **ne s'appuie pas sur un biais** ou une variable qui fuit l'information ;
+- la confiance des métiers conditionne l'adoption de l'outil.
+
+## Ce que fait SHAP
+
+SHAP (SHapley Additive exPlanations) vient de la théorie des jeux. Pour chaque prédiction, il répartit l'écart entre le score du client et le score moyen entre les différentes variables :
+
+```text
+score du client = score moyen + contribution(revenu) + contribution(endettement) + ...
+```
+
+Chaque contribution est positive (augmente le risque) ou négative (le diminue). On obtient deux lectures complémentaires :
+
+1. **Globale** : quelles variables pèsent le plus sur l'ensemble du portefeuille.
+2. **Locale** : pour un client précis, ce qui a fait monter ou baisser son score.
+
+## En pratique avec Python
+
+```python
+import shap
+import xgboost as xgb
+
+model = xgb.XGBClassifier(**best_params).fit(X_train, y_train)
+
+explainer = shap.TreeExplainer(model)
+shap_values = explainer(X_test)
+
+shap.plots.beeswarm(shap_values)        # vue globale
+shap.plots.waterfall(shap_values[0])    # explication d'un client
+```
+
+`TreeExplainer` est rapide sur les modèles à base d'arbres, ce qui permet de calculer les explications à la volée dans une API.
+
+## Rendre l'explication utile
+
+Un graphique SHAP brut n'est pas toujours parlant pour un analyste métier. Dans le dashboard Streamlit, j'ai privilégié :
+
+- les **3 à 5 facteurs principaux** de chaque décision, formulés en langage clair ;
+- un code couleur simple : ce qui augmente le risque, ce qui le réduit ;
+- l'affichage du score et de son explication **sur le même écran**.
+
+## Ce que j'en retiens
+
+La performance d'un modèle n'a de valeur que si les personnes qui l'utilisent lui font confiance. L'explicabilité n'est pas une option en fin de projet : elle se pense dès le choix du modèle et de la façon de présenter les résultats.
+
+Vous pouvez manipuler ce principe dans la [démo du simulateur de score](/projets/risque-credit-bank-of-africa#demo).
+
+_Une question ou un retour sur cet article ? Écrivez-moi via la page [contact](/contact)._

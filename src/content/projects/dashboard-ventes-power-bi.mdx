@@ -1,0 +1,36 @@
+export const meta = {
+  title: "Tableau de bord des ventes",
+  year: "2025",
+  order: 3,
+  featured: true,
+  summary: "Dashboard interactif pour piloter les ventes : modèle en étoile, mesures DAX, filtres et drill-down.",
+  cover: "line",
+  role: "Projet académique",
+  tags: ["Power BI", "DAX", "Data Modeling", "SQL"],
+  metrics: [],
+  links: [],
+  demo: { type: "builtin", id: "sales-dashboard" },
+}
+
+## Contexte
+
+Donner aux décideurs une vue claire et filtrable de la performance commerciale, pour répondre vite à « où vend-on, quoi, et est-ce que ça progresse ? ».
+
+## Données
+
+{/* TODO : source des données, périmètre (produits, régions, période) */}
+
+Ventes par produit, région et période.
+
+## Démarche
+
+1. **Modélisation en étoile** : une table de faits (ventes) et des dimensions (produit, région, date).
+2. **Mesures DAX** : chiffre d'affaires, nombre de commandes, panier moyen, évolution sur la période.
+3. **Pages interactives** : filtres, segments et drill-down.
+
+{/* TODO : ajoute une capture du vrai dashboard dans /public/projets et affiche-la ici :
+![Dashboard Power BI](/projets/dashboard-ventes.png) */}
+
+## Ce que montre la démo
+
+Une reproduction web du principe, sur des **données synthétiques** : changez la région ou la catégorie, tous les indicateurs se recalculent. Pour intégrer le vrai rapport Power BI (« Publier sur le web »), remplace la démo par `demo: { type: "embed", url: "https://app.powerbi.com/view?r=...", title: "Dashboard ventes" }`.

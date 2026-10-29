@@ -1,0 +1,40 @@
+export const meta = {
+  title: "Détection de fraudes bancaires",
+  year: "2025",
+  order: 2,
+  featured: true,
+  summary: "Détection d'anomalies sur des transactions bancaires dans un contexte Big Data, avec un arbitrage précision / rappel maîtrisé.",
+  cover: "scatter",
+  role: "Projet académique",
+  tags: ["Python", "Spark", "Machine Learning", "Détection d'anomalies"],
+  metrics: [],
+  links: [],
+  demo: { type: "builtin", id: "fraud-threshold" },
+}
+
+## Contexte
+
+Projet académique : repérer les transactions suspectes dans un grand volume de données, où **les fraudes sont très rares**. Un modèle qui dit « jamais fraude » a 99 % d'exactitude et ne sert à rien : tout l'enjeu est ailleurs.
+
+## Données
+
+{/* TODO : source du dataset (ex. Kaggle Credit Card Fraud), volume, % de fraudes */}
+
+Transactions bancaires avec un fort déséquilibre entre classes.
+
+## Démarche
+
+1. Analyse exploratoire et traitement du déséquilibre (rééchantillonnage, pondération des classes).
+2. Modèles de détection d'anomalies et modèles supervisés, traitement distribué avec **Spark**.
+3. Évaluation adaptée aux classes rares : **précision, rappel, courbe précision-rappel**, plutôt que l'exactitude.
+4. Choix du **seuil d'alerte** selon le coût métier : rater une fraude coûte cher, mais trop d'alertes épuisent les équipes.
+
+## Résultats
+
+{/* TODO : ex. rappel de xx % pour une précision de yy % */}
+
+- Un pipeline de détection et une méthode de choix du seuil justifiable auprès du métier.
+
+## Ce que montre la démo
+
+Données **synthétiques** générées dans votre navigateur. Déplacez le seuil : vous voyez en direct combien de fraudes sont détectées, combien passent à travers, et combien de clients honnêtes sont bloqués à tort.

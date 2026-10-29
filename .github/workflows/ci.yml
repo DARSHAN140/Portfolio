@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run build
+      - name: Tests de fumée (site construit)
+        run: |
+          npm start -- -p 3000 &
+          npx --yes wait-on@8.0.3 http://localhost:3000/api/health --timeout 60000
+          BASE_URL=http://localhost:3000 npm run test:smoke
